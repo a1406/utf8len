@@ -48,6 +48,28 @@ int getUtf8Length(char *str)
 	return len;
 }
 
+//ascii算一个字节，其他算两个字节
+int getContentLen(char *str)
+{
+	int clen = strlen(str);
+	int len = 0;
+	char *ptr;
+	int t;
+
+	for(ptr = str;
+		*ptr!=0 && len<clen;)
+	{
+		t = UTFLEN((unsigned char)*ptr);
+		if (t == 1)
+			len += 1;
+		else
+			len += 2;
+		ptr += t;
+	
+	}
+	return len;
+}
+
 //get子串
 char* subUtfString(char *str, unsigned int start, unsigned int end)
 {
